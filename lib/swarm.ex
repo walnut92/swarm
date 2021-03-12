@@ -69,6 +69,8 @@ defmodule Swarm do
   @spec unregister_name(term) :: :ok
   defdelegate unregister_name(name), to: Swarm.Registry, as: :unregister
 
+  defdelegate unregister_local(name), to: Swarm.Registry
+
   @doc """
   Get the pid of a registered name.
   """

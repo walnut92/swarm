@@ -11,6 +11,13 @@ defmodule Swarm.Registry do
   defdelegate register(name, pid), to: Tracker, as: :track
   defdelegate register(name, module, fun, args, timeout), to: Tracker, as: :track
 
+  def unregister_local(name) do
+    case get_by_name(name) do
+      :undefined -> :ok
+      entry(pid: pid) = ent when is_pid(pid) -> Tracker.untrack_local(ent)
+    end
+  end
+
   @spec unregister(term) :: :ok
   def unregister(name) do
     case get_by_name(name) do
